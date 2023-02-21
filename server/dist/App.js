@@ -7,20 +7,20 @@ const express_1 = __importDefault(require("express"));
 require("dotenv/config");
 const database_1 = __importDefault(require("./Config/database"));
 const validateEnv_1 = __importDefault(require("./utils/validateEnv"));
+const adminRouter_1 = require("./routes/adminRouter");
 class App {
     constructor() {
         this.app = (0, express_1.default)();
         this.InitialRoutes();
         this.dbconnexion();
+        this.InitialMiddlwaires();
     }
     InitialRoutes() {
-        const router = express_1.default.Router();
-        router.get('/', (req, res) => {
-            res.json({
-                'message': "hello souma"
-            });
-        });
-        this.app.use('/', router);
+        this.app.use("/api/admin", adminRouter_1.livreurRoute);
+    }
+    InitialMiddlwaires() {
+        this.app.use(express_1.default.json());
+        this.app.use(express_1.default.urlencoded({ extended: true }));
     }
     dbconnexion() {
         const connexiondb = new database_1.default();
