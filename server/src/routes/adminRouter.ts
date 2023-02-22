@@ -4,12 +4,13 @@ class LivreurRoute{
     public router:express.Router
 
     constructor() {
-        this.router=express();
+        this.router=express()
         this.Livreurroute();
     }
+
     private Livreurroute(){
-        this.router.get('/livreur',Livreur.AfficheLivreur)
-        this.router.post('/livreur',Livreur.AddLivreur)
+        this.router.post('/addlivreur',Livreur.AddLivreur)
+        this.router.get('/Alllivreur',Livreur.AfficheLivreur)
         this.router.put('/livreur',Livreur.UpadatLivreur)
         this.router.delete('/livreur',Livreur.DeleteLivreur)
     }

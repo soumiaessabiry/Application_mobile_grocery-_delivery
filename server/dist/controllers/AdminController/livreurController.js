@@ -9,10 +9,24 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const userModel_1 = require("../../models/userModel");
 class LivreurController {
     constructor() {
-        this.AddLivreur = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
-            res.json("ajouter livreur");
+        this.AddLivreur = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const { username, email, password } = req.body;
+            if (!username || !email || !password)
+                res.status(400).json({
+                    message: "remplire les champs"
+                });
+            const checkLivreur = yield userModel_1.Users.findOne({ email });
+            if (checkLivreur) {
+                res.send("Email already exists");
+            }
+            else {
+                const createdLivreur = new userModel_1.Users({ username, email, password });
+                yield createdLivreur.save();
+                res.json(createdLivreur);
+            }
         });
         this.UpadatLivreur = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             res.json("Updtae livreur");
@@ -21,7 +35,10 @@ class LivreurController {
             res.json("Delete livreur");
         });
         this.AfficheLivreur = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
-            res.json("Afficher livreur");
+            userModel_1.Users.find()
+                .then(users => {
+                res.send(users);
+            });
         });
         this.AllLivreur = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             res.json("Afficher All  livreur");

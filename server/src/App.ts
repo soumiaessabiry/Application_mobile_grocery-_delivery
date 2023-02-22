@@ -3,31 +3,30 @@ import 'dotenv/config';
 import  Connexiondb  from './Config/database';
 import env from './utils/validateEnv'
 import { livreurRoute } from './routes/adminRouter';
+import * as bodyParser from 'body-parser';
+
 
 class App {
     public app: express.Application ;
        constructor() {
            this.app=express();
-           this.InitialRoutes();
+           this.router();
            this.dbconnexion();
-           this.InitialMiddlwaires();
         }
 
-    private InitialRoutes(){
-       this.app.use("/api/admin",livreurRoute)
-    }
-    
-    private InitialMiddlwaires(){
-     this.app.use(express.json());
-     this.app.use(express.urlencoded({extended:true}))
-    }
-
+   
     public dbconnexion() {
        const connexiondb =new Connexiondb();
     }
 
+    private router(){
+        this.app.use(bodyParser.json());
+        this.app.use(bodyParser.urlencoded({extended:true}))
+        this.app.use("/api/admin",livreurRoute)
+     }
+     
     public listen(){
-        const PORT =env.PORT
+        const PORT = env.PORT
             this.app.listen(PORT,()=>{
              console.log(`Server is Runing on Port ${PORT}`)
         })
