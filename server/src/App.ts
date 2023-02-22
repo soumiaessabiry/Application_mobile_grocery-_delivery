@@ -2,6 +2,7 @@ import  express  from 'express';
 import 'dotenv/config';
 import  Connexiondb  from './Config/database';
 import env from './utils/validateEnv'
+import router from './routes/productRouter';
 
 class App {
     public app: express.Application ;
@@ -12,13 +13,8 @@ class App {
         }
 
     private InitialRoutes(){
-        const router=express.Router();
-        router.get('/',(req,res)=>{
-            res.json({
-                'message':"hello souma"
-            })
-        });
-        this.app.use('/',router);
+        this.app.use(express.json())
+        this.app.use("/product",router)
     }
 
     public dbconnexion() {
