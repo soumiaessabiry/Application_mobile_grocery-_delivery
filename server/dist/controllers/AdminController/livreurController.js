@@ -55,13 +55,20 @@ class LivreurController {
             });
         });
         this.AfficheLivreur = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            const { id } = req.params;
+            const AfficheLivreur = yield userModel_1.Users.findById({ _id: id })
+                .then((AfficheLivreur) => {
+                res.json(AfficheLivreur);
+            })
+                .catch((error) => {
+                res.json(error);
+            });
+        });
+        this.AllLivreur = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             userModel_1.Users.find()
                 .then(users => {
                 res.send(users);
             });
-        });
-        this.AllLivreur = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
-            res.json("Afficher All  livreur");
         });
     }
 }

@@ -10,7 +10,8 @@ class LivreurRoute{
 
     private Livreurroute(){
         this.router.post('/addlivreur',Livreur.AddLivreur)
-        this.router.get('/Alllivreur',Livreur.AfficheLivreur)
+        this.router.get('/AfficheLivreur/:id',Livreur.AfficheLivreur)
+        this.router.get('/Alllivreur',Livreur.AllLivreur)
         this.router.put('/updatlivreur/:id',Livreur.UpadatLivreur)
         this.router.delete('/deletlivreur/:id',Livreur.DeleteLivreur)
     }

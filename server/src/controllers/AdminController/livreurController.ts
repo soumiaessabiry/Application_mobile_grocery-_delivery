@@ -33,11 +33,6 @@ class LivreurController {
       else{
          res.status(500).json({msg:"error"})
       }
-
-
-         
-       
-
    }
    public DeleteLivreur=async(req:Request,res:Response,next:NextFunction)=>{
       const {id}=req.params;
@@ -51,13 +46,21 @@ class LivreurController {
       })
    }
    public AfficheLivreur=async(req:Request,res:Response,next:NextFunction)=>{
+     const {id}=req.params;
+     const AfficheLivreur=await Users.findById({_id:id})
+     .then((AfficheLivreur)=>{
+      res.json(AfficheLivreur)
+     })
+     .catch((error)=>{
+      res.json(error)
+
+     })
+   }
+   public AllLivreur=async(req:Request,res:Response,next:NextFunction)=>{
       Users.find()
       .then(users => {
         res.send(users);
-      })
-   }
-   public AllLivreur=async(req:Request,res:Response,next:NextFunction)=>{
-    res.json("Afficher All  livreur")
+      })   
    }
 }
 const Livreur=new LivreurController
