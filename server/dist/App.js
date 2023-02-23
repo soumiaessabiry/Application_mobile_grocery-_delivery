@@ -32,6 +32,7 @@ const database_1 = __importDefault(require("./Config/database"));
 const validateEnv_1 = __importDefault(require("./utils/validateEnv"));
 const adminRouter_1 = require("./routes/adminRouter");
 const bodyParser = __importStar(require("body-parser"));
+const productRouter_1 = __importDefault(require("./routes/productRouter"));
 class App {
     constructor() {
         this.app = (0, express_1.default)();
@@ -45,6 +46,7 @@ class App {
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: true }));
         this.app.use("/api/admin", adminRouter_1.livreurRoute);
+        this.app.use("/product", productRouter_1.default);
     }
     listen() {
         const PORT = validateEnv_1.default.PORT;

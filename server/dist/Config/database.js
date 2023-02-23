@@ -7,6 +7,7 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const validateEnv_1 = __importDefault(require("../utils/validateEnv"));
 class Connexiondb {
     constructor() {
+        mongoose_1.default.set('strictQuery', false);
         mongoose_1.default.connect(validateEnv_1.default.URL_DB)
             .then(() => {
             console.log('Database Connected');
