@@ -15,7 +15,7 @@ class LivreurController {
         this.AddLivreur = (req, res) => __awaiter(this, void 0, void 0, function* () {
             const { username, email, password } = req.body;
             if (!username || !email || !password)
-                res.status(400).json({
+                return res.status(400).json({
                     message: "remplire les champs"
                 });
             const checkLivreur = yield userModel_1.Users.findOne({ email });
@@ -28,8 +28,21 @@ class LivreurController {
                 res.json(createdLivreur);
             }
         });
-        this.UpadatLivreur = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
-            res.json("Updtae livreur");
+        this.UpadatLivreur = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const { id } = req.params;
+            const { username, email, password } = req.body;
+            const updateDataLivreur = {
+                username,
+                email,
+                password
+            };
+            const newUpdate = yield userModel_1.Users.findByIdAndUpdate({ _id: id }, { $set: updateDataLivreur });
+            if (newUpdate) {
+                res.json(newUpdate);
+            }
+            else {
+                res.status(500).json({ msg: "error" });
+            }
         });
         this.DeleteLivreur = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             res.json("Delete livreur");

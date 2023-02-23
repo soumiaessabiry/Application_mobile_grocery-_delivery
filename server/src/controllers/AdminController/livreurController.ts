@@ -5,7 +5,7 @@ import dataUser from "../../utils/Interfaces/userInterface";
 class LivreurController {
    public AddLivreur = async(req: Request, res: Response)=>{
        const { username, email, password }:dataUser = req.body;
-      if(!username || !email || !password )  res.status(400).json({
+      if(!username || !email || !password )  return res.status(400).json({
          message : "remplire les champs"
       })
       const checkLivreur=await Users.findOne({email})
@@ -18,9 +18,28 @@ class LivreurController {
       }
    }
 
+   public UpadatLivreur=async(req:Request,res:Response)=>{
+      const {id}=req.params;
+      const {username, email, password} = req.body;
 
-   public UpadatLivreur=async(req:Request,res:Response,next:NextFunction)=>{
-    res.json("Updtae livreur")
+      const updateDataLivreur = {
+         username,
+         email,
+         password
+      }
+
+      const newUpdate = await Users.findByIdAndUpdate({_id: id},{$set: updateDataLivreur})
+      if(newUpdate){
+         res.json(newUpdate)
+      }
+      else{
+         res.status(500).json({msg:"error"})
+      }
+
+
+         
+       
+
    }
    public DeleteLivreur=async(req:Request,res:Response,next:NextFunction)=>{
     res.json("Delete livreur")
