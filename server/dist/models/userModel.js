@@ -22,35 +22,27 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-require("dotenv/config");
-const database_1 = __importDefault(require("./Config/database"));
-const validateEnv_1 = __importDefault(require("./utils/validateEnv"));
-const adminRouter_1 = require("./routes/adminRouter");
-const bodyParser = __importStar(require("body-parser"));
-class App {
-    constructor() {
-        this.app = (0, express_1.default)();
-        this.router();
-        this.dbconnexion();
+exports.Users = void 0;
+const mongoose = __importStar(require("mongoose"));
+const userSchema = new mongoose.Schema({
+    username: {
+        type: String,
+    },
+    email: {
+        type: String,
+    },
+    password: {
+        type: String,
+    },
+    role: {
+        type: String,
+        default: "Livreur"
+    },
+    confirmation: {
+        type: Boolean,
+        default: false
     }
-    dbconnexion() {
-        const connexiondb = new database_1.default();
-    }
-    router() {
-        this.app.use(bodyParser.json());
-        this.app.use(bodyParser.urlencoded({ extended: true }));
-        this.app.use("/api/admin", adminRouter_1.livreurRoute);
-    }
-    listen() {
-        const PORT = validateEnv_1.default.PORT;
-        this.app.listen(PORT, () => {
-            console.log(`Server is Runing on Port ${PORT}`);
-        });
-    }
-}
-exports.default = App;
+});
+const Users = mongoose.model("Users", userSchema);
+exports.Users = Users;
