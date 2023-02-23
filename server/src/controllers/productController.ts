@@ -9,7 +9,7 @@ const addProduct = async (req: Request, res: Response) => {
   });
   if (product) {
     const productSave = product.save();
-    res.send("created success");
+    res.send("created successfully");
   } else {
     res.send('product error');
   }
