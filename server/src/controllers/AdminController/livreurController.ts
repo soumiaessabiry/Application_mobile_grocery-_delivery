@@ -21,13 +21,11 @@ class LivreurController {
    public UpadatLivreur=async(req:Request,res:Response)=>{
       const {id}=req.params;
       const {username, email, password} = req.body;
-
       const updateDataLivreur = {
          username,
          email,
          password
       }
-
       const newUpdate = await Users.findByIdAndUpdate({_id: id},{$set: updateDataLivreur})
       if(newUpdate){
          res.json(newUpdate)
@@ -42,7 +40,15 @@ class LivreurController {
 
    }
    public DeleteLivreur=async(req:Request,res:Response,next:NextFunction)=>{
-    res.json("Delete livreur")
+      const {id}=req.params;
+      const deletLivreur=await Users.findByIdAndDelete({_id:id})
+      .then((deletLivreur)=>{
+         res.json("delet avec succes")
+
+      })
+      .catch((error)=>{
+         res.json("error de delet")
+      })
    }
    public AfficheLivreur=async(req:Request,res:Response,next:NextFunction)=>{
       Users.find()

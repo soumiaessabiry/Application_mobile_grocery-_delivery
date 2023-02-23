@@ -45,7 +45,14 @@ class LivreurController {
             }
         });
         this.DeleteLivreur = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
-            res.json("Delete livreur");
+            const { id } = req.params;
+            const deletLivreur = yield userModel_1.Users.findByIdAndDelete({ _id: id })
+                .then((deletLivreur) => {
+                res.json("delet avec succes");
+            })
+                .catch((error) => {
+                res.json("error de delet");
+            });
         });
         this.AfficheLivreur = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             userModel_1.Users.find()
