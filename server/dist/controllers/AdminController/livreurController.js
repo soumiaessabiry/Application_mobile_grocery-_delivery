@@ -31,6 +31,10 @@ class LivreurController {
         this.UpadatLivreur = (req, res) => __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
             const { username, email, password } = req.body;
+            if (!username || !email || !password)
+                return res.status(400).json({
+                    message: "remplire les champs"
+                });
             const updateDataLivreur = {
                 username,
                 email,
@@ -45,16 +49,30 @@ class LivreurController {
             }
         });
         this.DeleteLivreur = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
-            res.json("Delete livreur");
+            const { id } = req.params;
+            const deletLivreur = yield userModel_1.Users.findByIdAndDelete({ _id: id })
+                .then((deletLivreur) => {
+                res.json("delet avec succes");
+            })
+                .catch((error) => {
+                res.json("error de delet");
+            });
         });
         this.AfficheLivreur = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            const { id } = req.params;
+            const AfficheLivreur = yield userModel_1.Users.findById({ _id: id })
+                .then((AfficheLivreur) => {
+                res.json(AfficheLivreur);
+            })
+                .catch((error) => {
+                res.json(error);
+            });
+        });
+        this.AllLivreur = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             userModel_1.Users.find()
                 .then(users => {
                 res.send(users);
             });
-        });
-        this.AllLivreur = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
-            res.json("Afficher All  livreur");
         });
     }
 }

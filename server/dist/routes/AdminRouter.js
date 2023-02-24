@@ -13,9 +13,10 @@ class LivreurRoute {
     }
     Livreurroute() {
         this.router.post('/addlivreur', livreurController_1.default.AddLivreur);
-        this.router.get('/Alllivreur', livreurController_1.default.AfficheLivreur);
+        this.router.get('/AfficheLivreur/:id', livreurController_1.default.AfficheLivreur);
+        this.router.get('/Alllivreur', livreurController_1.default.AllLivreur);
         this.router.put('/updatlivreur/:id', livreurController_1.default.UpadatLivreur);
-        this.router.delete('/livreur', livreurController_1.default.DeleteLivreur);
+        this.router.delete('/deletlivreur/:id', livreurController_1.default.DeleteLivreur);
     }
 }
 exports.livreurRoute = new LivreurRoute().router;
