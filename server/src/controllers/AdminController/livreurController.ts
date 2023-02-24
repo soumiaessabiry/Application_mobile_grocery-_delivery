@@ -1,6 +1,7 @@
 import { Request,Response,NextFunction } from "express";
 import { Users } from "../../models/userModel";
 import dataUser from "../../utils/Interfaces/userInterface";
+import bcryptjs from "bcryptjs"
 
 class LivreurController {
    public AddLivreur = async(req: Request, res: Response)=>{
@@ -8,13 +9,15 @@ class LivreurController {
       if(!username || !email || !password )  return res.status(400).json({
          message : "remplire les champs"
       })
+      const salt=await bcryptjs.genSalt(10)
+      const hachPassword=await bcryptjs.hashSync(password,salt)
       const checkLivreur=await Users.findOne({email})
       if(checkLivreur){
          res.send("Email already exists");
       }else{
-        const createdLivreur = new Users({username, email,password});
+        const createdLivreur = new Users({username, email,password:hachPassword});
          await createdLivreur.save()
-         res.json(createdLivreur);     
+         res.json({createdLivreur:createdLivreur});     
       }
    }
 
