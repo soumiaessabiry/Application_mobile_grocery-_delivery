@@ -21,6 +21,9 @@ class LivreurController {
    public UpadatLivreur=async(req:Request,res:Response)=>{
       const {id}=req.params;
       const {username, email, password} = req.body;
+      if(!username || !email || !password )  return res.status(400).json({
+         message : "remplire les champs"
+      })
       const updateDataLivreur = {
          username,
          email,

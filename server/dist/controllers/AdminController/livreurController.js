@@ -31,6 +31,10 @@ class LivreurController {
         this.UpadatLivreur = (req, res) => __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
             const { username, email, password } = req.body;
+            if (!username || !email || !password)
+                return res.status(400).json({
+                    message: "remplire les champs"
+                });
             const updateDataLivreur = {
                 username,
                 email,
