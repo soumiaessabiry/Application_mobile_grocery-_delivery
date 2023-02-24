@@ -8,8 +8,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const userModel_1 = require("../../models/userModel");
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
 class LivreurController {
     constructor() {
         this.AddLivreur = (req, res) => __awaiter(this, void 0, void 0, function* () {
@@ -18,14 +22,16 @@ class LivreurController {
                 return res.status(400).json({
                     message: "remplire les champs"
                 });
+            const salt = yield bcryptjs_1.default.genSalt(10);
+            const hachPassword = yield bcryptjs_1.default.hashSync(password, salt);
             const checkLivreur = yield userModel_1.Users.findOne({ email });
             if (checkLivreur) {
                 res.send("Email already exists");
             }
             else {
-                const createdLivreur = new userModel_1.Users({ username, email, password });
+                const createdLivreur = new userModel_1.Users({ username, email, password: hachPassword });
                 yield createdLivreur.save();
-                res.json(createdLivreur);
+                res.json({ createdLivreur: createdLivreur });
             }
         });
         this.UpadatLivreur = (req, res) => __awaiter(this, void 0, void 0, function* () {
