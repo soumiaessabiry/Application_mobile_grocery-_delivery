@@ -5,6 +5,7 @@ import env from './utils/validateEnv'
 import { livreurRoute } from './routes/adminRouter';
 import * as bodyParser from 'body-parser';
 import router from './routes/productRouter';
+import ErrorHandler from "./middleware/ErrorHanlder"
 
 class App {
     public app: express.Application ;
@@ -23,6 +24,7 @@ class App {
         this.app.use(bodyParser.urlencoded({extended:true}))
         this.app.use("/api/admin",livreurRoute)
         this.app.use("/product",router)
+        this.app.use(ErrorHandler)
 
      }
      
