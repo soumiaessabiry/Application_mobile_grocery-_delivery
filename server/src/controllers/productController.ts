@@ -1,8 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
 import Product from '../models/productModel';
+import uploadImage from '../middleware/uploadImage';
 
 const addProduct = async (req: Request, res: Response, next: NextFunction) => {
   try {
+    console.log(req.body)
     const productExist = await Product.findOne({ name: req.body.name });
     if (productExist) throw new Error("This Product Already Exist");
       const product = await new Product({
