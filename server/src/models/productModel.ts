@@ -1,16 +1,25 @@
-import { Document, Model, model, Schema } from 'mongoose';
+import mongoose,{ Model, model } from 'mongoose';
+import { dataProduct } from '../utils/Interfaces/productInterface';
 
-interface Product extends Document {
-  name: String;
-  price: Number;
-  quantity: Number;
-}
+const productSchema = new mongoose.Schema<dataProduct>({
+  name: {
+    type: String,
+    required: true,
+  },
+  price: {
+    type: Number,
+    required: true,
+  },
+  quantity: {
+    type: Number,
+    default: 1,
+    required: true,
+  },
+  image: {
+    type: String,
+    required: true,
+  },
+});
 
-const productSchema:Schema = new Schema({
-  name: { type: String, required: true },
-  price: { type: Number, required: true },
-  quantity: { type: Number, required: true },
-})
-
-const productModel:Model<Product> = model<Product>('Product',productSchema)
-export default productModel
+const Product: mongoose.Model<dataProduct> = model<dataProduct>('Product', productSchema);
+export default Product;
