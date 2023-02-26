@@ -37,7 +37,6 @@ const userSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        default: "Livreur"
     },
     confirmation: {
         type: Boolean,

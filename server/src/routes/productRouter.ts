@@ -1,10 +1,11 @@
 import { Router } from "express";
-import addProduct from "../controllers/productController";
 import uploadImage from "../middleware/uploadImage";
+import {add,getOne} from "../controllers/productController"
 
 const router = Router()
 
-router.get('/add',uploadImage.single('image'),addProduct)
+router.post('/add',uploadImage.single('image'),add)
+router.get('/:id',getOne)
 
 
 export default router

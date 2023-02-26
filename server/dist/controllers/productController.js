@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+<<<<<<< HEAD
 const addProduct = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         console.log(req.body);
@@ -26,6 +27,26 @@ const addProduct = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
         // } else {
         //   throw new Error();
         // }
+=======
+const productModel_1 = __importDefault(require("../models/productModel"));
+const addProduct = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const productExist = yield productModel_1.default.findOne({ name: req.body.name });
+        if (productExist)
+            throw new Error("This Product Already Exist");
+        const product = yield new productModel_1.default({
+            name: req.body.name,
+            price: req.body.price,
+            quantity: req.body.quantity,
+        });
+        if (product) {
+            const productSave = product.save();
+            res.send('created successfully');
+        }
+        else {
+            res.send('product error');
+        }
+>>>>>>> 62f00467e2bac74fb9506a636be375123f5af8f9
     }
     catch (error) {
         next(error);
