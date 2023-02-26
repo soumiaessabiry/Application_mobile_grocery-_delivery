@@ -7,6 +7,6 @@ const router = Router();
 router.post('/add', uploadImage.single('image'), add);
 router.get('/:id', getOne);
 router.get('/', getAll);
-router.delete('/:id', remove);
+router.delete('/remove/:id', remove);
 
 export default router;
