@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import Product from '../models/productModel';
-import uploadImage from '../middleware/uploadImage';
+import { ValidationError, validationResult } from 'express-validator';
 
 export const add = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -23,7 +23,11 @@ export const add = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export const getOne = async (req: Request, res: Response, next: NextFunction) => {
+export const getOne = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const id = req.params.id;
   try {
     const oneProduct = await Product.findById({ _id: id });
@@ -34,18 +38,25 @@ export const getOne = async (req: Request, res: Response, next: NextFunction) =>
   }
 };
 
-export const getAll = async (req: Request, res: Response, next: NextFunction) => {
+export const getAll = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const allProduct = await Product.find();
     if (!allProduct) throw new Error('No Products Found');
-    if (allProduct)
-      res.json({ success: true, products: allProduct });
+    if (allProduct) res.json({ success: true, products: allProduct });
   } catch (error) {
     next(error);
   }
 };
 
-export const remove = async (req: Request, res: Response, next: NextFunction) => {
+export const remove = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const id = req.params.id;
   try {
     const productExist = await Product.findByIdAndRemove({ _id: id });
@@ -58,23 +69,28 @@ export const remove = async (req: Request, res: Response, next: NextFunction) =>
   }
 };
 
-// export const update = async (req: Request, res: Response, next: NextFunction) => {
-//   const id = req.params.id;
-//   const errors = validationResult(req);
-//   try {
-//     if (errors.isEmpty()) {
-//       const updateOrganizme = await Organizme.updateOne(
-//         { _id: id },
-//         { name: req.body.name }
-//       );
-//       if (!updateOrganizme) throw new Error('This Organizme Not Update');
-//       if (updateOrganizme) {
-//         res.json({ message: 'Update Success' });
-//       }
-//     } else throw new Error(errors.errors[0].msg);
-//   } catch (error) {
-//     next(error);
-//   }
-// };
-
-
+export const update = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const id = req.params.id;
+  const errors = validationResult(req);
+  try {
+    if (errors.isEmpty()) {
+      const updateProduct = await Product.updateOne(
+        { _id: id },
+        { name: req.body.name }
+      );
+      if (!updateProduct) throw new Error('This product Not Update');
+      if (updateProduct) {
+        res.json({ message: 'Product Update Success' });
+      }
+    } else {
+      console.log(errors.array())
+      // throw new Error(error);
+    }
+  } catch (error) {
+    next(error);
+  }
+};
