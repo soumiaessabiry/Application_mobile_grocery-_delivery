@@ -1,5 +1,5 @@
 import express from "express";
-import Livreur from "../controllers/AdminController/livreurController";
+import Livreur from "../../controllers/AdminController/livreurController";
 class LivreurRoute{
     public router:express.Router
 
