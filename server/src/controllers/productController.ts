@@ -34,18 +34,16 @@ export const getOne = async (req: Request, res: Response, next: NextFunction) =>
   }
 };
 
-// export const getAll = async (req: Request, res: Response, next: NextFunction) => {
-//   try {
-//     const allOrganizme = await Organizme.aggregate([
-//       { $project: { _id: 1, name: 1 } },
-//     ]);
-//     if (allOrganizme.length <= 0) throw new Error('No organization found');
-//     if (allOrganizme.length > 0)
-//       res.json({ success: true, organizme: allOrganizme });
-//   } catch (error) {
-//     next(error);
-//   }
-// };
+export const getAll = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const allProduct = await Product.find();
+    if (!allProduct) throw new Error('No Products Found');
+    if (allProduct)
+      res.json({ success: true, products: allProduct });
+  } catch (error) {
+    next(error);
+  }
+};
 
 // export const remove = async (req: Request, res: Response, next: NextFunction) => {
 //   const id = req.params.id;
