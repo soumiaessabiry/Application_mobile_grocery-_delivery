@@ -26,7 +26,8 @@ class LivreurController {
       const {id}=req.params;
       const {username, email, password} = req.body;
       if(!username || !email || !password ) 
-      next(new Error('remplire les champs'));      const updateDataLivreur = {
+      next(new Error('remplire les champs'));     
+       const updateDataLivreur = {
          username,
          email,
          password

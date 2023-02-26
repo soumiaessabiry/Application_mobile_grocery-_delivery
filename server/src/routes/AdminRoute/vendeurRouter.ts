@@ -9,8 +9,8 @@ class  VendeurRoute {
 	
 	private Vendeurroute(){
 	this.router.post('/Addvendeur',vendeurController.Addvendeur)
-	this.router.put('/Updutevendeur',vendeurController.Updutevendeur)
-	this.router.delete('/Deletevendeur',vendeurController.Deletevendeur)
+	this.router.put('/Updutevendeur/:id',vendeurController.Updutevendeur)
+	this.router.delete('/Deletevendeur/:id',vendeurController.Deletevendeur)
 	this.router.get('/Affichevendeur',vendeurController.Affichevendeur)
 	this.router.get('/Allvendeur',vendeurController.Allvendeur)
 	}

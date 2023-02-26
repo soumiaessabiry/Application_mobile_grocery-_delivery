@@ -34,10 +34,30 @@ class VendeurController {
             }
         });
         this.Updutevendeur = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
-            res.send("Updutevendeur");
+            const { id } = req.params;
+            const { username, email, password } = req.body;
+            if (!username || !email || !password)
+                next(new Error("remplire les champs"));
+            const dataUpdate = {
+                username, email, password
+            };
+            const upduteVendeur = yield userModel_1.Users.findByIdAndUpdate({ _id: id }, { $set: dataUpdate });
+            if (upduteVendeur) {
+                res.json(upduteVendeur);
+            }
+            else {
+                next(new Error("Error to update vendeur"));
+            }
         });
         this.Deletevendeur = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
-            res.send("Deletevendeur");
+            const { id } = req.params;
+            const deleteVendeur = yield userModel_1.Users.findByIdAndDelete({ _id: id });
+            if (deleteVendeur) {
+                res.json({ msgdelete: "delet vendeur avec success" });
+            }
+            else {
+                next(new Error("error to deletr vendeur"));
+            }
         });
         this.Allvendeur = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             res.send("Allvendeur");

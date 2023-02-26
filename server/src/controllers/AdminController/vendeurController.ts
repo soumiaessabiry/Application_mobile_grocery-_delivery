@@ -21,10 +21,30 @@ class VendeurController {
         }
     }
     public Updutevendeur=async(req:Request,res:Response,next:NextFunction)=>{
-            res.send("Updutevendeur")
+        const {id}=req.params;
+        const {username, email, password} = req.body;
+        if(!username || !email || !password ) 
+         next(new Error("remplire les champs"))
+        const dataUpdate={
+        username,email,password}
+        const upduteVendeur= await Users.findByIdAndUpdate({_id: id},{$set:dataUpdate})
+        if(upduteVendeur){
+           res.json(upduteVendeur)
+        }else{
+         next(new Error("Error to update vendeur")) 
+        }
+
     }
     public Deletevendeur=async(req:Request,res:Response,next:NextFunction)=>{
-            res.send("Deletevendeur")
+        const {id}=req.params;
+        const deleteVendeur=await Users.findByIdAndDelete({_id:id})
+        if(deleteVendeur){
+                res.json({msgdelete:"delet vendeur avec success"})
+
+        }else{
+             next(new Error("error to deletr vendeur")) 
+       
+        }
     }
     public Allvendeur=async(req:Request,res:Response,next:NextFunction)=>{
             res.send("Allvendeur")
