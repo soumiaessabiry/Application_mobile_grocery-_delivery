@@ -11,7 +11,20 @@ import { check } from 'express-validator';
 
 const router = Router();
 
-router.post('/add', uploadImage.single('image'), add);
+router.post(
+  '/add',
+  uploadImage.single('image'),
+  [
+    check('name', 'Name is Required').notEmpty(),
+    check('price', 'Price is Requered').notEmpty().isNumeric().isFloat(),
+    check('quantity', 'Quantity is Requered')
+      .notEmpty()
+      .isNumeric()
+      .isDecimal(),
+    check('image', 'Image is Requered').notEmpty(),
+  ],
+  add
+);
 router.get('/:id', getOne);
 router.get('/', getAll);
 router.delete('/remove/:id', remove);
@@ -20,7 +33,10 @@ router.post(
   [
     check('name', 'Name is Required').notEmpty(),
     check('price', 'Price is Requered').notEmpty().isNumeric().isFloat(),
-    check('quantity', 'Quantity is Requered').notEmpty().isNumeric().isDecimal(),
+    check('quantity', 'Quantity is Requered')
+      .notEmpty()
+      .isNumeric()
+      .isDecimal(),
     check('image', 'Image is Requered').notEmpty(),
   ],
   update

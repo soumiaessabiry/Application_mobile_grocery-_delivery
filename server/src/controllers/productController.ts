@@ -1,22 +1,28 @@
 import { Request, Response, NextFunction } from 'express';
 import Product from '../models/productModel';
-import { ValidationError, validationResult } from 'express-validator';
+import { validationResult } from 'express-validator';
 
 export const add = async (req: Request, res: Response, next: NextFunction) => {
+  const errors = validationResult(req);
   try {
-    const productExist = await Product.findOne({ name: req.body.name });
-    if (productExist) throw new Error('This Product Already Exist');
-    const product = await new Product({
-      name: req.body.name,
-      price: req.body.price,
-      quantity: req.body.quantity,
-      image: req.body.image,
-    });
-    if (product) {
-      const productSave = product.save();
-      res.send('created successfully');
+    if (errors.isEmpty()) {
+      const productExist = await Product.findOne({ name: req.body.name });
+      if (productExist) throw new Error('This Product Already Exist');
+      const product = await new Product({
+        name: req.body.name,
+        price: req.body.price,
+        quantity: req.body.quantity,
+        image: req.body.image,
+      });
+      if (product) {
+        const productSave = product.save();
+        res.send('created successfully');
+      } else {
+        throw new Error();
+      }
     } else {
-      throw new Error();
+      // throw new Error(errors)
+      console.log(errors.array())
     }
   } catch (error) {
     next(error);
@@ -87,7 +93,7 @@ export const update = async (
         res.json({ message: 'Product Update Success' });
       }
     } else {
-      console.log(errors.array())
+      console.log(errors.array());
       // throw new Error(error);
     }
   } catch (error) {
