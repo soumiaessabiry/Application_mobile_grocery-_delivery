@@ -13,18 +13,26 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const productModel_1 = __importDefault(require("../models/productModel"));
-const addProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const product = yield new productModel_1.default({
-        name: req.body.name,
-        price: req.body.price,
-        quantity: req.body.quantity,
-    });
-    if (product) {
-        const productSave = product.save();
-        res.send("created successfully");
+const addProduct = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const productExist = yield productModel_1.default.findOne({ name: req.body.name });
+        if (productExist)
+            throw new Error("This Product Already Exist");
+        const product = yield new productModel_1.default({
+            name: req.body.name,
+            price: req.body.price,
+            quantity: req.body.quantity,
+        });
+        if (product) {
+            const productSave = product.save();
+            res.send('created successfully');
+        }
+        else {
+            res.send('product error');
+        }
     }
-    else {
-        res.send('product error');
+    catch (error) {
+        next(error);
     }
 });
 exports.default = addProduct;

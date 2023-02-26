@@ -12,7 +12,6 @@ const userSchema=new mongoose.Schema<dataUser>({
       },
       role: {
         type: String,
-        default:"Livreur"
       },
       confirmation: {
         type:Boolean,

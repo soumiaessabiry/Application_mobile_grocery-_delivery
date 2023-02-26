@@ -30,9 +30,11 @@ const express_1 = __importDefault(require("express"));
 require("dotenv/config");
 const database_1 = __importDefault(require("./Config/database"));
 const validateEnv_1 = __importDefault(require("./utils/validateEnv"));
-const adminRouter_1 = require("./routes/adminRouter");
+const livreurRouter_1 = require("./routes/AdminRoute/livreurRouter");
+const vendeurRouter_1 = require("./routes/AdminRoute/vendeurRouter");
 const bodyParser = __importStar(require("body-parser"));
 const productRouter_1 = __importDefault(require("./routes/productRouter"));
+const ErrorHanlder_1 = __importDefault(require("./middleware/ErrorHanlder"));
 class App {
     constructor() {
         this.app = (0, express_1.default)();
@@ -45,8 +47,9 @@ class App {
     router() {
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: true }));
-        this.app.use("/api/admin", adminRouter_1.livreurRoute);
+        this.app.use("/api/admin", livreurRouter_1.livreurRoute, vendeurRouter_1.vendeurRoute);
         this.app.use("/product", productRouter_1.default);
+        this.app.use(ErrorHanlder_1.default);
     }
     listen() {
         const PORT = validateEnv_1.default.PORT;
