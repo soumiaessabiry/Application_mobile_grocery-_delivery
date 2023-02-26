@@ -1,0 +1,19 @@
+import express from "express";
+import vendeurController from "../../controllers/AdminController/vendeurController"
+class  VendeurRoute {
+	public router:express.Router; 
+	constructor(){
+		this.router=express();
+		this.Vendeurroute();
+	}
+	
+	private Vendeurroute(){
+	this.router.post('/Addvendeur',vendeurController.Addvendeur)
+	this.router.put('/Updutevendeur/:id',vendeurController.Updutevendeur)
+	this.router.delete('/Deletevendeur/:id',vendeurController.Deletevendeur)
+	this.router.get('/Affichevendeur/:id',vendeurController.Affichevendeur)
+	this.router.get('/Allvendeur',vendeurController.Allvendeur)
+	}
+	
+}
+export const vendeurRoute=new VendeurRoute().router
