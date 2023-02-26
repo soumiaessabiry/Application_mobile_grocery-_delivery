@@ -45,18 +45,18 @@ export const getAll = async (req: Request, res: Response, next: NextFunction) =>
   }
 };
 
-// export const remove = async (req: Request, res: Response, next: NextFunction) => {
-//   const id = req.params.id;
-//   try {
-//     const organizmeExist = await Organizme.findByIdAndRemove({ _id: id });
-//     if (!organizmeExist) throw new Error('This Organizme not Found');
-//     if (organizmeExist) {
-//       res.json({ message: 'Organizme Deleted Success' });
-//     }
-//   } catch (error) {
-//     next(error);
-//   }
-// };
+export const remove = async (req: Request, res: Response, next: NextFunction) => {
+  const id = req.params.id;
+  try {
+    const productExist = await Product.findByIdAndRemove({ _id: id });
+    if (!productExist) throw new Error('This Organizme not Found');
+    if (productExist) {
+      res.json({ message: 'Product Deleted Success' });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
 
 // export const update = async (req: Request, res: Response, next: NextFunction) => {
 //   const id = req.params.id;
