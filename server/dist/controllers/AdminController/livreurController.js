@@ -43,17 +43,17 @@ class LivreurController {
                 email,
                 password
             };
-            const newUpdate = yield userModel_1.Users.findByIdAndUpdate({ _id: id }, { $set: updateDataLivreur });
-            if (newUpdate) {
-                res.json(newUpdate);
-            }
-            else {
+            yield userModel_1.Users.findByIdAndUpdate({ _id: id }, { $set: updateDataLivreur })
+                .then((updatelivreur) => {
+                res.json(updatelivreur);
+            })
+                .catch((err) => {
                 next(new Error('Error to updat livreur'));
-            }
+            });
         });
         this.DeleteLivreur = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            const deletLivreur = yield userModel_1.Users.findByIdAndDelete({ _id: id })
+            yield userModel_1.Users.findByIdAndDelete({ _id: id })
                 .then((deletLivreur) => {
                 res.json("delet avec succes");
             })
@@ -63,7 +63,7 @@ class LivreurController {
         });
         this.AfficheLivreur = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            const AfficheLivreur = yield userModel_1.Users.findById({ _id: id })
+            yield userModel_1.Users.findById({ _id: id })
                 .then((AfficheLivreur) => {
                 res.json(AfficheLivreur);
             })

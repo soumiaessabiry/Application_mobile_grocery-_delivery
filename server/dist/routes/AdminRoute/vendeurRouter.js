@@ -15,7 +15,7 @@ class VendeurRoute {
         this.router.post('/Addvendeur', vendeurController_1.default.Addvendeur);
         this.router.put('/Updutevendeur/:id', vendeurController_1.default.Updutevendeur);
         this.router.delete('/Deletevendeur/:id', vendeurController_1.default.Deletevendeur);
-        this.router.get('/Affichevendeur', vendeurController_1.default.Affichevendeur);
+        this.router.get('/Affichevendeur/:id', vendeurController_1.default.Affichevendeur);
         this.router.get('/Allvendeur', vendeurController_1.default.Allvendeur);
     }
 }

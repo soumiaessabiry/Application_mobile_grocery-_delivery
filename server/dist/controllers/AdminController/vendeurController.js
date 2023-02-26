@@ -38,32 +38,40 @@ class VendeurController {
             const { username, email, password } = req.body;
             if (!username || !email || !password)
                 next(new Error("remplire les champs"));
-            const dataUpdate = {
-                username, email, password
-            };
-            const upduteVendeur = yield userModel_1.Users.findByIdAndUpdate({ _id: id }, { $set: dataUpdate });
-            if (upduteVendeur) {
+            const dataUpdate = { username, email, password };
+            yield userModel_1.Users.findByIdAndUpdate({ _id: id }, { $set: dataUpdate })
+                .then((upduteVendeur) => {
                 res.json(upduteVendeur);
-            }
-            else {
+            })
+                .catch((err) => {
                 next(new Error("Error to update vendeur"));
-            }
+            });
         });
         this.Deletevendeur = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            const deleteVendeur = yield userModel_1.Users.findByIdAndDelete({ _id: id });
-            if (deleteVendeur) {
+            yield userModel_1.Users.findByIdAndDelete({ _id: id })
+                .then(() => {
                 res.json({ msgdelete: "delet vendeur avec success" });
-            }
-            else {
+            })
+                .catch((err) => {
                 next(new Error("error to deletr vendeur"));
-            }
+            });
         });
         this.Allvendeur = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
-            res.send("Allvendeur");
+            userModel_1.Users.find()
+                .then(vendeur => {
+                res.send(vendeur);
+            });
         });
         this.Affichevendeur = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
-            res.send("Affichevendeur");
+            const { id } = req.params;
+            userModel_1.Users.findOne({ _id: id })
+                .then((vendeur) => {
+                res.json({ vendeur });
+            })
+                .catch((err) => {
+                next(new Error(err));
+            });
         });
     }
 }
