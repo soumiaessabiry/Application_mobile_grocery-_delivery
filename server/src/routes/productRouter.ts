@@ -15,13 +15,10 @@ router.post(
   '/add',
   uploadImage.single('image'),
   [
-    check('name', 'Name is Required').notEmpty(),
-    check('price', 'Price is Requered').notEmpty().isNumeric().isFloat(),
-    check('quantity', 'Quantity is Requered')
-      .notEmpty()
-      .isNumeric()
-      .isDecimal(),
-    check('image', 'Image is Requered').notEmpty(),
+    check('name', 'Name is Required').trim().notEmpty(),
+    check('price', 'Price is Requered').trim().notEmpty(),
+    check('quantity', 'Quantity is Requered').trim().notEmpty().isDecimal(),
+    check('image', 'Image is Requered').trim().notEmpty(),
   ],
   add
 );
@@ -31,13 +28,14 @@ router.delete('/remove/:id', remove);
 router.post(
   '/update/:id',
   [
-    check('name', 'Name is Required').notEmpty(),
-    check('price', 'Price is Requered').notEmpty().isNumeric().isFloat(),
+    check('name', 'Name is Required').trim().notEmpty(),
+    check('price', 'Price is Requered').trim().notEmpty().isNumeric().isFloat(),
     check('quantity', 'Quantity is Requered')
+      .trim()
       .notEmpty()
       .isNumeric()
       .isDecimal(),
-    check('image', 'Image is Requered').notEmpty(),
+    check('image', 'Image is Requered').trim().notEmpty(),
   ],
   update
 );

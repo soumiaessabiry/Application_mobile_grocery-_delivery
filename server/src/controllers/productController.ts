@@ -21,8 +21,7 @@ export const add = async (req: Request, res: Response, next: NextFunction) => {
         throw new Error();
       }
     } else {
-      // throw new Error(errors)
-      console.log(errors.array())
+      throw new Error(errors.array().map(error => error.msg).join(', '))
     }
   } catch (error) {
     next(error);
