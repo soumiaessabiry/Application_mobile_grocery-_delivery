@@ -21,7 +21,12 @@ export const add = async (req: Request, res: Response, next: NextFunction) => {
         throw new Error();
       }
     } else {
-      throw new Error(errors.array().map(error => error.msg).join(', '))
+      throw new Error(
+        errors
+          .array()
+          .map((error) => error.msg)
+          .join(', ')
+      );
     }
   } catch (error) {
     next(error);
@@ -85,7 +90,12 @@ export const update = async (
     if (errors.isEmpty()) {
       const updateProduct = await Product.updateOne(
         { _id: id },
-        { name: req.body.name }
+        {
+          name: req.body.name,
+          price: req.body.price,
+          quantity: req.body.quantity,
+          image: req.body.image,
+        }
       );
       if (!updateProduct) throw new Error('This product Not Update');
       if (updateProduct) {
